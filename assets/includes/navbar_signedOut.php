@@ -26,7 +26,7 @@
           <a class="nav-link active" href="#more-info" style="margin-right: 2rem; font-size: 25px;">About Us</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#" 
+          <a class="nav-link" href="login.php" 
             style="margin: 3px; display: inline-block; padding: 5px 10px; background: linear-gradient(158deg, rgba(255,255,255,1) 0%, rgba(24,197,199,0.7758753159466911) 100%); color: black; border-radius: 8px; text-align: center; font-weight: bold; font-size: 25px;">GET STARTED
           </a>
         </li>

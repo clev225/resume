@@ -3,9 +3,6 @@
     require './assets/includes/header.php';
     require './assets/includes/navbar_signedOut.php';
 
-    $fn->authPage();
-    $resumes = $db->query("SELECT * FROM resumes WHERE user_id=".$fn->Auth()['id']." ORDER BY id DESC");
-    $resumes = $resumes->fetch_all(1);
 ?>
 <!doctype html>
 <html lang="en">
