@@ -8,13 +8,9 @@
     $resumes = $db->query("SELECT * FROM resumes WHERE ( slug='$slug') ");
     $resume = $resumes->fetch_assoc();
 
-    $user = $fn->Auth();
-
-    if ($user['role'] !== 'admin') {
-        // If not an admin, redirect to the homepage or show an error message
-        header("Location: login.php"); // Replace with your homepage URL
-        exit();
-    }
+    $fn->authPage();
+    // Check if the user is an admin
+    $isAdmin = $fn->Auth()['role'] === 'admin';
 
     if(!$resume) {
         $fn->redirect('index.php');
@@ -46,14 +42,160 @@
     <title><?=$resume['firstname'].' | '.$resume['resume_title']?></title>
 </head>
 
-<body> 
-    <div class="extra">
-        <div class="extra w-100 py-2 bg-dark d-flex justify-content-center gap-3">
-            <button class="btn btn-light btn-sm" id="print"><i class="bi bi-printer"></i> Print</button>
-            <button class="btn btn-light btn-sm" id="download_pdf"><i class="bi bi-filetype-pdf"></i> Download PDF</button>
-            <a href="admin_userprofile.php" class="btn btn-primary btn-sm"><i class="bi bi-arrow-left-circle"></i> Back</a>
-        </div>
-    </div>
+<body>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #FAFAFA;
+            font-family: 'Poppins', sans-serif;
+            font-size: 12pt;
+            background: linear-gradient(to right, rgb(127, 127, 213), rgb(134, 168, 231), rgb(145, 234, 228));
+            background-attachment: fixed;
+        }
+
+        .page {
+            width: 21cm;
+            min-height: 29.7cm;
+            padding: 2cm;
+            margin: 0.5cm auto;
+            border: 1px #D3D3D3 solid;
+            border-radius: 5px;
+            background: white;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        @media print {
+            .page {
+                margin: 0;
+                border: initial;
+                border-radius: initial;
+                width: initial;
+                min-height: initial;
+                box-shadow: initial;
+                background: initial;
+                page-break-after: always;
+            }
+        }
+
+        .flex-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .personal-info.zsection {
+            flex: 1;
+            padding-right: 20px;
+        }
+
+        .image-container {
+            flex: 0 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        .img-thumbnail {
+            width: 2in;
+            height: 2in;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .custom-file-upload {
+            margin-top: 20px;
+        }
+
+        .custom-file-upload input[type="file"] {
+            display: none;
+        }
+
+        .custom-file-upload label {
+            display: inline-block;
+            padding: 6px 12px;
+            cursor: pointer;
+            background-color: #f8f9fa;
+            border: 1px solid #ced4da;
+            border-radius: 0.25rem;
+            font-size: 0.875rem;
+            line-height: 1.5;
+            color: #495057;
+            transition: background-color 0.15s ease-in-out;
+        }
+
+        .custom-file-upload label:hover {
+            background-color: #e2e6ea;
+        }
+
+        .title {
+            vertical-align: top;
+            width: 20%;
+            padding-top: 10px;
+        }
+
+        .content {
+            width: 80%;
+            padding-left: 10px;
+        }
+
+        .content > div {
+            margin-bottom: 15px;
+        }
+
+        @media screen and (max-width: 768px) {
+            .title,
+            .content {
+                width: 100%;
+            }
+        }    
+
+        .label {
+            font-weight: bold;
+        }
+
+        .section-title {
+            font-size: 1.2em;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #d3d3d3;
+            padding-bottom: 5px;
+        }
+
+        .fw-bold {
+            font-weight: 600;
+        }
+
+        .mb-2 {
+            margin-bottom: 10px;
+        }
+
+        .pb-3 {
+            padding-bottom: 20px;
+        }
+
+        .zsection {
+            margin-bottom: 20px;
+        }
+    </style>
+    
+    <?php
+        ?>
+            <div class="extra">
+                <div class="extra w-100 py-2 bg-dark d-flex justify-content-center gap-3">
+                    <button class="btn btn-light btn-sm" id="print"><i class="bi bi-printer"></i> Print</button>
+                    <button class="btn btn-light btn-sm" id="download_pdf"><i class="bi bi-filetype-pdf"></i> Download PDF</button>
+                    <a href="admincopy.php" class="btn btn-primary btn-sm"><i class="bi bi-arrow-left-circle"></i> Back</a>
+                </div>
+            </div>
+        <?php
+    ?>  
 
     <div class="page">
         <div class="subpage">

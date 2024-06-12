@@ -77,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <img src="./assets/images/admin.jpg" class="avatar img-fluid rounded" alt="">
                         </a>
                         <div class="dropdown-menu dropdown-menu-end">
-                            <a href="#" class="dropdown-item">Logout</a>
+                            <a href="actions/logout.action.php" class="dropdown-item">Logout</a>
                         </div>
                     </li>
                 </ul>
@@ -134,6 +134,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </div>
 <?php
 ?>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');

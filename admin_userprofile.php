@@ -93,7 +93,7 @@
                                                 <a href="admin_viewresume.php?resume=<?php echo htmlspecialchars($resume['slug']); ?>" class="text-decoration-none small">
                                                     <i class="bi bi-file-text"></i> View
                                                 </a>
-                                                <a href="actions/admin_deleteresume.action.php?id=<?php echo $resume_id; ?>" onclick="return confirm('Are you sure you want to delete this resume?');" class="text-decoration-none small">
+                                                <a href="admin_deleteresume.action.php" onclick="return confirm('Are you sure you want to delete this resume?');" class="text-decoration-none small">
                                                     <i class="bi bi-trash2"></i> Delete
                                                 </a>
                                             </div>
@@ -112,7 +112,7 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');

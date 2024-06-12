@@ -37,7 +37,7 @@ if($_POST) {
 
       $db->query($query);
       $fn->setAlert('Resume Successfully Added.');
-      $fn->redirect('../index.php');
+      $fn->redirect('../userdashboard.php');
     }
     catch(Exception $error) {
       $fn->setError($error->getMessage());
