@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 14, 2024 at 10:08 PM
+-- Generation Time: Jun 12, 2024 at 10:16 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -114,9 +114,9 @@ CREATE TABLE `resumes` (
 --
 
 INSERT INTO `resumes` (`id`, `user_id`, `surname`, `firstname`, `middlename`, `age`, `birthdate`, `gender`, `nationality`, `contact_no`, `email_id`, `province`, `municipality`, `barangay`, `street`, `house_no`, `slug`, `updated_at`, `resume_title`) VALUES
-(1, 1, 'Rovero', 'Gil', 'R.', '', '', '', '', '09123123123', 'gilcxx20@gmail.com', 'Quezon, Province', 'Candelaria', 'Barangay Poblacion', 'Ramos Street', '395.', '5i3h4t11eo9spkl7', 1713982354, 'Internship for Canva'),
-(4, 2, 'Gil', 'Rovero', '', '21 years old', '', '', 'Filipino', '09123123123', 'test123123123@gmail.com', 'Quezon, Province', 'Candelaria', 'Barangay Poblacion', 'Ramos Street', '395', 'q4tz2232ix8v50h5', 1715712404, 'Canva Apple Software Engineer'),
-(5, 2, 'Rovero', 'Gil', 'Ramos', '21', 'September 8, 2002', 'Male', 'Filipino', '09123123123', 'test123123123@gmail.com', 'Quezon, Province', 'Candelaria', 'Barangay Poblacion', 'Ramos Street', '395', '5s07lm813tfh2k4u', 1715714644, 'Microsoft Internship');
+(26, 17, 'Magnaye', 'Honey Grace', 'Magnaye', '22', 'March 26, 2002', 'Female', 'Filipino', '09218005474', 'maywardskrengge26@gmail.com', 'Quezon Province', 'Candelaria, Quezon', 'Malbanban Norte', 'Tibanglan Road', 'None', '01t8724011fxqd86', 1718218461, 'New Resume'),
+(27, 17, 'Javier', 'Cleven', 'Magnaye', '21', 'January 4, 2001', 'Female', 'Filipino', '09218005474', 'clevenjavier2021@gmail.com', 'Quezon Province', 'Candelaria, Quezon', 'Malbanban Norte', 'Tibanglan Road', 'None', '0z562uj16712mo85', 1718218526, 'resume1718218513'),
+(28, 17, 'Javier', 'Cleven', 'Magnaye', '21', 'January 4, 2001', 'Female', 'Filipino', '09218005474', 'clevenjavier2021@gmail.com', 'Quezon Province', 'Candelaria, Quezon', 'Malbanban Norte', 'Tibanglan Road', 'None', 'luo6z9e3p17014yv', 1718218556, 'resume1718218555');
 
 -- --------------------------------------------------------
 
@@ -158,16 +158,31 @@ CREATE TABLE `users` (
   `username` varchar(250) NOT NULL,
   `email_id` varchar(250) NOT NULL,
   `password` varchar(250) NOT NULL,
-  `confirmpw` varchar(250) NOT NULL
+  `confirmpw` varchar(250) NOT NULL,
+  `role` varchar(50) NOT NULL,
+  `status` varchar(10) NOT NULL DEFAULT 'pending'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `full_name`, `username`, `email_id`, `password`, `confirmpw`) VALUES
-(1, 'Gil Rovero', 'gil123', 'gil123@gmail.com', '46f94c8de14fb36680850768ff1b7f2a', '46f94c8de14fb36680850768ff1b7f2a'),
-(2, 'Gil Rovero', 'heal123', 'heal123@gmail.com', '46f94c8de14fb36680850768ff1b7f2a', '46f94c8de14fb36680850768ff1b7f2a');
+INSERT INTO `users` (`id`, `full_name`, `username`, `email_id`, `password`, `confirmpw`, `role`, `status`) VALUES
+(3, 'Cleven Javier', 'cleven11', 'cleven11@gmail.com', 'd41d8cd98f00b204e9800998ecf8427e', '46f94c8de14fb36680850768ff1b7f2a', '', 'active'),
+(4, 'Kate Lazo', 'makate12', 'katelazo12@example.com', '46f94c8de14fb36680850768ff1b7f2a', '46f94c8de14fb36680850768ff1b7f2a', '', 'active'),
+(5, 'Jomer Samson', 'jomjom123', 'jomer@example.com', '46f94c8de14fb36680850768ff1b7f2a', '46f94c8de14fb36680850768ff1b7f2a', '', 'active'),
+(6, 'Jimuel Hepana', 'hepanagods21', 'jimuel@example.com', '46f94c8de14fb36680850768ff1b7f2a', '46f94c8de14fb36680850768ff1b7f2a', '', 'active'),
+(7, 'Cleven Javier', 'clev225', 'clevenjavier2021@gmail.com', 'efe6398127928f1b2e9ef3207fb82663', '46f94c8de14fb36680850768ff1b7f2a', '', 'active'),
+(8, 'Jonn Cleven Ramos Javier', 'cleven12', 'clevenjavier3@example.com', '46f94c8de14fb36680850768ff1b7f2a', '46f94c8de14fb36680850768ff1b7f2a', '', 'active'),
+(10, 'Mariel Palma', 'maye12', 'mariel@example.com', '46f94c8de14fb36680850768ff1b7f2a', '46f94c8de14fb36680850768ff1b7f2a', '', 'active'),
+(11, 'Ivy Pondivida', 'ivy12', 'ivy@example.com', '46f94c8de14fb36680850768ff1b7f2a', '46f94c8de14fb36680850768ff1b7f2a', '', 'active'),
+(12, 'Mclaine Rovero', 'mc12', 'mclaine@example.com', '46f94c8de14fb36680850768ff1b7f2a', '46f94c8de14fb36680850768ff1b7f2a', '', 'active'),
+(13, 'Full Name', 'register', 'register@example.com', '46f94c8de14fb36680850768ff1b7f2a', '46f94c8de14fb36680850768ff1b7f2a', '', 'active'),
+(14, 'test test', 'test2', 'test2@isda.com', '46f94c8de14fb36680850768ff1b7f2a', '46f94c8de14fb36680850768ff1b7f2a', '', 'active'),
+(17, 'Honey Grace', 'honey26', 'honey@example.com', '46f94c8de14fb36680850768ff1b7f2a', '46f94c8de14fb36680850768ff1b7f2a', '', 'active'),
+(19, 'Cleven', 'clecle', 'cle@isda.com', '46f94c8de14fb36680850768ff1b7f2a', '46f94c8de14fb36680850768ff1b7f2a', '', 'active'),
+(20, 'cath pogi', 'cath1', 'cath@isda.com', '46f94c8de14fb36680850768ff1b7f2a', '46f94c8de14fb36680850768ff1b7f2a', '', 'active'),
+(21, 'Veronica Sulit', 'vero1', 'veronica@isda.com', '46f94c8de14fb36680850768ff1b7f2a', '46f94c8de14fb36680850768ff1b7f2a', '', 'active');
 
 --
 -- Indexes for dumped tables
@@ -212,31 +227,31 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `education`
 --
 ALTER TABLE `education`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `experience`
 --
 ALTER TABLE `experience`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `resumes`
 --
 ALTER TABLE `resumes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `skills`
 --
 ALTER TABLE `skills`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
