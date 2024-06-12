@@ -2,10 +2,20 @@
     $title = "Admin | Personal Profile Generator";
     require './assets/includes/header.php';
     // require './assets/includes/navbar.php';
-    $fn->authPage();
 
-    $resumes = $db->query("SELECT * FROM resumes WHERE user_id=".$fn->Auth()['id']." ORDER BY id DESC");
-    $resumes = $resumes->fetch_all(1);
+    $fn->authPage();
+    // Check if the user is an admin
+    $isAdmin = $fn->Auth()['role'] === 'admin';
+    
+    if ($isAdmin) {
+        // Fetch all resumes for admin
+        $resumes = $db->query("SELECT * FROM resumes ORDER BY id DESC");
+    } else {
+        // Fetch resumes only for the logged-in user
+        $resumes = $db->query("SELECT * FROM resumes WHERE user_id=" . $fn->Auth()['id'] . " ORDER BY id DESC");
+    }
+    
+    $resumes = $resumes->fetch_all(MYSQLI_ASSOC);
 ?>
 
     <div class="wrapper">
@@ -62,22 +72,31 @@
                                 User Lists
                             </h5>
                         </div>
-                        <div class="card border-0" style="background-color: white;">
-                                <div class="card-body"> 
-                                    <h6 class="small text-secondary m-0" style="font-size:16px;">
-                                        <i class="bi bi-clock-history"></i> Jeremy Davis
-                                    </h6>
-                                    <div class="card" style="width: 14rem; margin-top: 12px;">
-                                        <img src="https://media.istockphoto.com/vectors/cv-for-job-vector-id515161220?k=6&m=515161220&s=612x612&w=0&h=NTns7T4DQMFekIVQYni2n8XfZU7fdzJ8BXok1eq5jTU=" class="card-img-top" alt="...">
-                                    </div>
-                                    <a href="" class="text-decoration-none small">
-                                        <i class="bi bi-file-text"></i> Open
-                                    </a>
-                                    <a href="#" onclick="" class="text-decoration-none small">
-                                        <i class="bi bi-trash2"></i> Delete
-                                    </a>
+                        <div class="container mt-5" style="max-height: 580px; overflow-y: auto;">
+                            <?php if ($resumes): ?>
+                                <div class="d-flex flex-wrap" style="gap: 2.5rem;">
+                                    <?php foreach ($resumes as $resume): ?>
+                                        <div class="card" style="width: 15rem;">
+                                            <div class="card-body">
+                                                <h5><?php echo htmlspecialchars($resume['resume_title']); ?></h5>
+                                                <div class="card" style="width: 11rem;">
+                                                    <img src="https://media.istockphoto.com/vectors/cv-for-job-vector-id515161220?k=6&m=515161220&s=612x612&w=0&h=NTns7T4DQMFekIVQYni2n8XfZU7fdzJ8BXok1eq5jTU=" class="card-img-top" alt="...">
+                                                </div>
+                                                <a href="updateresume.php?resume=<?php echo htmlspecialchars($resume['slug']); ?>" class="text-decoration-none small">
+                                                    <i class="bi bi-file-text"></i> Proceed
+                                                </a>
+                                                <a href="#" onclick="confirmDelete(<?php echo htmlspecialchars($resume['id']); ?>)" class="text-decoration-none small">
+                                                    <i class="bi bi-trash2"></i> Delete
+                                                </a>
+                                            </div>
+                                        </div>
+                                    <?php endforeach; ?>
                                 </div>
-                            </div>
+                            <?php else: ?>
+                                <div class="text-center py-3 border rounded mt-3" style="background-color: rgba(236, 236, 236, 0.56);">
+                                    <i class="bi bi-file-text"></i> No Resumes Available
+                                </div>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
