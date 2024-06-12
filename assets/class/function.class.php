@@ -3,6 +3,22 @@
 session_start();
 
 class Functions {
+  private $db;
+
+  public function __construct($db){
+    $this->db = $db;
+  }
+
+  public function isAdmin($user_id) {
+    $query = "SELECT role FROM users WHERE id = ?";
+    $stmt = $this->db->prepare($query);
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $user = $result->fetch_assoc();
+
+    return $user['role'] === 'admin';
+}
 
   public function redirect($address) {
     header("Location:".$address);
