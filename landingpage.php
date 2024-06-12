@@ -3,6 +3,9 @@
     require './assets/includes/header.php';
     require './assets/includes/navbar_signedOut.php';
 
+    $fn->authPage();
+    $resumes = $db->query("SELECT * FROM resumes WHERE user_id=".$fn->Auth()['id']." ORDER BY id DESC");
+    $resumes = $resumes->fetch_all(1);
 ?>
 <!doctype html>
 <html lang="en">
@@ -220,22 +223,22 @@
 </style>
 
 <script>
-function confirmDelete(id) {
-    Swal.fire({
-        title: 'Are you sure you want to delete?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!',
-        cancelButtonText: 'No, cancel!'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            window.location.href = 'actions/deleteresume.action.php?id=' + id;
-        }
-    });
-}
+  function confirmDelete(id) {
+      Swal.fire({
+          title: 'Are you sure you want to delete?',
+          text: "You won't be able to revert this!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, delete it!',
+          cancelButtonText: 'No, cancel!'
+      }).then((result) => {
+          if (result.isConfirmed) {
+              window.location.href = 'actions/deleteresume.action.php?id=' + id;
+          }
+      });
+  }
 </script>
 
 <?php
