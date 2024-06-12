@@ -67,7 +67,7 @@
                                 <img src="./assets/images/admin.jpg" class="avatar img-fluid rounded" alt="">
                             </a>
                             <div class="dropdown-menu dropdown-menu-end">
-                                <a href="#" class="dropdown-item">Logout</a>
+                                <a href="actions/logout.action.php" class="dropdown-item">Logout</a>
                             </div>
                         </li>
                     </ul>
@@ -90,10 +90,10 @@
                                                 <div class="card" style="width: 11rem;">
                                                     <img src="https://media.istockphoto.com/vectors/cv-for-job-vector-id515161220?k=6&m=515161220&s=612x612&w=0&h=NTns7T4DQMFekIVQYni2n8XfZU7fdzJ8BXok1eq5jTU=" class="card-img-top" alt="...">
                                                 </div>
-                                                <a href="updateresume.php?resume=<?php echo htmlspecialchars($resume['slug']); ?>" class="text-decoration-none small">
+                                                <a href="admin_viewresume.php?resume=<?php echo htmlspecialchars($resume['slug']); ?>" class="text-decoration-none small">
                                                     <i class="bi bi-file-text"></i> View
                                                 </a>
-                                                <a href="#" onclick="confirmDelete(<?php echo htmlspecialchars($resume['id']); ?>)" class="text-decoration-none small">
+                                                <a href="actions/deleteresume.action.php" onclick="confirmDelete(<?php echo htmlspecialchars($resume['id']); ?>)" class="text-decoration-none small">
                                                     <i class="bi bi-trash2"></i> Delete
                                                 </a>
                                             </div>
@@ -112,6 +112,7 @@
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');

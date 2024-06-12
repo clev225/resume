@@ -28,7 +28,7 @@ if($_POST) {
             if($result){
 
                 if($result['status'] == 'pending') {
-                    $fn->setError('Your account is pending approval.');
+                    $fn->setError('Your account is still pending for approval.');
                     $fn->redirect('../login.php');
 
                 }else{
