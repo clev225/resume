@@ -1,87 +1,99 @@
 <?php
-    $title = "Admin | Personal Profile Generator";
-    require './assets/includes/header.php';
-    // require './assets/includes/navbar.php';
-    $fn->authPage();
+$title = "Admin | Personal Profile Generator";
+require './assets/includes/header.php';
+// require './assets/includes/navbar.php';
+$fn->authPage();
 
-    $fn->authPage();
-    // Check if the user is an admin
-    $isAdmin = $fn->Auth()['role'] === 'admin';
-    
-    $user = $fn->Auth();
+// Check if the user is an admin
+$user = $fn->Auth();
 
-    if ($user['role'] !== 'admin') {
-        // If not an admin, redirect to the homepage or show an error message
-        header("Location: login.php"); // Replace with your homepage URL
-        exit();
+if ($user['role'] !== 'admin') {
+    // If not an admin, redirect to the homepage or show an error message
+    header("Location: login.php"); // Replace with your homepage URL
+    exit();
+}
+
+// Fetch pending accounts
+$userDetailsQuery = "SELECT id, full_name, username, email_id FROM users WHERE status='pending'";
+$userDetailsResult = $db->query($userDetailsQuery);
+
+// Handle approve or delete actions
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $userId = $_POST['user_id'];
+    $action = $_POST['action'];
+
+    if ($action == 'approve') {
+        $updateQuery = "UPDATE users SET status='active' WHERE id='$userId'";
+        $db->query($updateQuery);
+    } elseif ($action == 'delete') {
+        $deleteQuery = "DELETE FROM users WHERE id='$userId'";
+        $db->query($deleteQuery);
     }
 
-    $totalUsersQuery = "SELECT COUNT(*) as total FROM users";
-    $totalUsersResult = $db->query($totalUsersQuery);
-    $totalUsers = $totalUsersResult->fetch_assoc()['total'];
-
-    $userDetailsQuery = "SELECT full_name, username, email_id FROM users";
-    $userDetailsResult = $db->query($userDetailsQuery);
+    // Refresh the page to see the changes
+    header("Location: admin_newAcc.php");
+    exit();
+}
 ?>
 
-    <div class="wrapper">
-        <aside id="sidebar" class="js-sidebar">
-            <!-- Content For Sidebar -->
-            <div class="h-100">
-                <div class="sidebar-logo">
-                    <a href="#">eProfile Dashboard</a>
-                </div>
-                <ul class="sidebar-nav">
-                    <li class="sidebar-header">
-                        Admin
-                    </li>
-                    <li class="sidebar-item">
-                        <a href="admincopy.php" class="sidebar-link">
-                            <i class="fa-solid fa-list pe-2"></i>
-                            Dashboard
+<div class="wrapper">
+    <aside id="sidebar" class="js-sidebar">
+        <!-- Content For Sidebar -->
+        <div class="h-100">
+            <div class="sidebar-logo">
+                <a href="#">eProfile Dashboard</a>
+            </div>
+            <ul class="sidebar-nav">
+                <li class="sidebar-header">
+                    Admin
+                </li>
+                <li class="sidebar-item">
+                    <a href="admincopy.php" class="sidebar-link">
+                        <i class="fa-solid fa-list pe-2"></i>
+                        Dashboard
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="admin_userprofile.php" class="sidebar-link" data-bs-target="#pages">
+                        <i class="fa-solid fa-file-lines pe-2"></i>
+                        User Profiles
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="admin_newAcc.php" class="sidebar-link" data-bs-target="#auth">
+                        <i class="fa-regular fa-user pe-2"></i>
+                        New Accounts
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </aside>
+    <div class="main">
+        <nav class="navbar navbar-expand px-3 border-bottom" style="background: white;">
+            <div class="navbar-collapse navbar">
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <a href="#" data-bs-toggle="dropdown" class="nav-icon pe-md-0">
+                            <img src="./assets/images/admin.jpg" class="avatar img-fluid rounded" alt="">
                         </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a href="admin_userprofile.php" class="sidebar-link" data-bs-target="#pages">
-                            <i class="fa-solid fa-file-lines pe-2"></i>
-                            User Profiles
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a href="admin_newAcc.php" class="sidebar-link" data-bs-target="#auth">
-                            <i class="fa-regular fa-user pe-2"></i>
-                            New Accounts
-                        </a>
+                        <div class="dropdown-menu dropdown-menu-end">
+                            <a href="#" class="dropdown-item">Logout</a>
+                        </div>
                     </li>
                 </ul>
             </div>
-        </aside>
-        <div class="main">
-            <nav class="navbar navbar-expand px-3 border-bottom" style="background: white;">
-                <div class="navbar-collapse navbar">
-                    <ul class="navbar-nav">
-                        <li class="nav-item dropdown">
-                            <a href="#" data-bs-toggle="dropdown" class="nav-icon pe-md-0">
-                                <img src="./assets/images/admin.jpg" class="avatar img-fluid rounded" alt="">
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-end">
-                                <a href="#" class="dropdown-item">Logout</a>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-            <main class="content px-3 py-2">
+        </nav>
+        <main class="content px-3 py-2">
             <div class="container-fluid">
                 <div class="mb-3">
                     <h4 style="color: black; font-weight: bold;">Dashboard</h4>
                 </div>
-                
+
                 <!-- Table Element -->
                 <div class="card border-0" style="margin-top: 48px; background-color: white;">
-                    <div class="card-header" style=>
+                    <div class="card-header">
                         <h5 class="card-title" style="color: black; margin-top: 12px;">
-                            User List
+                            Pending User Accounts
                         </h5>
                     </div>
                     <div class="card-body" style="max-height: 400px; overflow-y: auto;">
@@ -100,6 +112,16 @@
                                         <td><?php echo htmlspecialchars($row['full_name']); ?></td>
                                         <td><?php echo htmlspecialchars($row['username']); ?></td>
                                         <td><?php echo htmlspecialchars($row['email_id']); ?></td>
+                                        <td>
+                                            <form method="post" action="admin_newAcc.php" style="display: inline;">
+                                                <input type="hidden" name="user_id" value="<?php echo $row['id']; ?>">
+                                                <button type="submit" name="action" value="approve" class="btn btn-success">Approve</button>
+                                            </form>
+                                            <form method="post" action="admin_newAcc.php" style="display: inline;">
+                                                <input type="hidden" name="user_id" value="<?php echo $row['id']; ?>">
+                                                <button type="submit" name="action" value="delete" class="btn btn-danger">Delete</button>
+                                            </form>
+                                        </td>
                                     </tr>
                                 <?php endwhile; ?>
                             </tbody>
@@ -108,8 +130,8 @@
                 </div>
             </div>
         </main>
-        </div>
     </div>
+</div>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
@@ -172,7 +194,6 @@ h4 {
 }
 
 /* Sidebar Elements Style */
-
 
 .sidebar-logo {
     padding: 1.15rem;
@@ -247,7 +268,7 @@ a.sidebar-link {
     }
 }
 
-.card border-0{
+.card border-0 {
     flex-wrap: wrap;
 }
 
@@ -286,8 +307,8 @@ a.sidebar-link {
         margin-left: 0;
     }
 
-    .navbar{
-        background-color: white;;
+    .navbar {
+        background-color: white;
     }
 
     .footer {
@@ -297,5 +318,5 @@ a.sidebar-link {
 </style>
 
 <?php
-    require './assets/includes/footer.php';
+require './assets/includes/footer.php';
 ?>

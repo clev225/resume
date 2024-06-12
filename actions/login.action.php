@@ -25,10 +25,17 @@ if($_POST) {
             $result = $db->query("SELECT * FROM users WHERE username='$username' AND password='$password'");
             $result = $result->fetch_assoc();
 
-            if($result) {
+            if($result){
+
+                if($result['status'] == 'pending') {
+                    $fn->setError('Your account is pending approval.');
+                    $fn->redirect('../login.php');
+
+                }else{
                 $fn->setAuth($result);
                 $fn->setAlert('Login Success.');
                 $fn->redirect('../index.php');
+            }
             } else {
                 $fn->setError('Incorrect username or password. Please try again.');
                 $fn->redirect('../login.php');

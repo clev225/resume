@@ -27,8 +27,8 @@ if($_POST) {
     }
 
     try {
-      $db->query("INSERT INTO users(full_name,username,email_id,password,confirmpw) VALUES('$full_name','$username','$email_id','$password','$confirmpw')");
-      $fn->setAlert('Successfully Registered.');
+      $db->query("INSERT INTO users(full_name,username,email_id,password,confirmpw, status) VALUES('$full_name','$username','$email_id','$password','$confirmpw','pending')");
+      $fn->setAlert('Successfully Registered. Your account is now pending, please wait for approval.');
       $fn->redirect('../login.php');
     }
     catch(Exception $error) {

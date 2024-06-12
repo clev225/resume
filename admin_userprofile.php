@@ -91,7 +91,7 @@
                                                     <img src="https://media.istockphoto.com/vectors/cv-for-job-vector-id515161220?k=6&m=515161220&s=612x612&w=0&h=NTns7T4DQMFekIVQYni2n8XfZU7fdzJ8BXok1eq5jTU=" class="card-img-top" alt="...">
                                                 </div>
                                                 <a href="updateresume.php?resume=<?php echo htmlspecialchars($resume['slug']); ?>" class="text-decoration-none small">
-                                                    <i class="bi bi-file-text"></i> Proceed
+                                                    <i class="bi bi-file-text"></i> View
                                                 </a>
                                                 <a href="#" onclick="confirmDelete(<?php echo htmlspecialchars($resume['id']); ?>)" class="text-decoration-none small">
                                                     <i class="bi bi-trash2"></i> Delete
