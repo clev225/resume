@@ -4,6 +4,14 @@
     // require './assets/includes/navbar.php';
     $fn->authPage();
 
+    $user = $fn->Auth();
+
+    if ($user['role'] !== 'admin') {
+        // If not an admin, redirect to the homepage or show an error message
+        header("Location: login.php"); // Replace with your homepage URL
+        exit();
+    }
+
     $totalUsersQuery = "SELECT COUNT(*) as total FROM users";
     $totalUsersResult = $db->query($totalUsersQuery);
     $totalUsers = $totalUsersResult->fetch_assoc()['total'];

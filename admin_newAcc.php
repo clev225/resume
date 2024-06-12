@@ -3,7 +3,27 @@
     require './assets/includes/header.php';
     // require './assets/includes/navbar.php';
     $fn->authPage();
+
+    $fn->authPage();
+    // Check if the user is an admin
+    $isAdmin = $fn->Auth()['role'] === 'admin';
+    
+    $user = $fn->Auth();
+
+    if ($user['role'] !== 'admin') {
+        // If not an admin, redirect to the homepage or show an error message
+        header("Location: login.php"); // Replace with your homepage URL
+        exit();
+    }
+
+    $totalUsersQuery = "SELECT COUNT(*) as total FROM users";
+    $totalUsersResult = $db->query($totalUsersQuery);
+    $totalUsers = $totalUsersResult->fetch_assoc()['total'];
+
+    $userDetailsQuery = "SELECT full_name, username, email_id FROM users";
+    $userDetailsResult = $db->query($userDetailsQuery);
 ?>
+
     <div class="wrapper">
         <aside id="sidebar" class="js-sidebar">
             <!-- Content For Sidebar -->
@@ -51,58 +71,43 @@
                     </ul>
                 </div>
             </nav>
-            <main class="content px-3 py-2" style="background-color: white;">
-                    <!-- Table Element -->
-                    <div class="card border-0" style="margin-top: 12px; background-color: white;">
-                        <div class="card-header">
-                            <h5 class="card-title" style="color: black; font-weight: bold;">
-                                New Accounts
-                            </h5>
-                        </div>
-                        <div class="card-body">
-                            <table class="table">
-                                <thead>
-                                    <tr style="color: black;">
-                                        <th scope="col">First Name</th>
-                                        <th scope="col">Middle Name</th>
-                                        <th scope="col">Last Name</th>
-                                        <th scope="col">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr style="color: black;">
-                                        <td>Mark</td>
-                                        <td>Otto</td>
-                                        <td>@mdo</td>
-                                        <td>
-                                            <i class="bi bi-check-circle-fill" style="color: green; margin-right: 20px;"></i>
-                                            <i class="bi bi-trash-fill" style="color: red;"></i>
-                                        </td>
-                                    </tr>
-                                    <tr style="color: black;">
-                                        <td>Jacob</td>
-                                        <td>Thornton</td>
-                                        <td>@fat</td>
-                                        <td>
-                                            <i class="bi bi-check-circle-fill" style="color: green; margin-right: 20px;"></i>
-                                            <i class="bi bi-trash-fill" style="color: red;"></i>
-                                        </td>
-                                    </tr>
-                                    <tr style="color: black;">
-                                        <td colspan="2">Larry the Bird</td>
-                                        <td>@twitter</td>
-                                        <td>
-                                            <i class="bi bi-check-circle-fill" style="color: green; margin-right: 20px;"></i>
-                                            <i class="bi bi-trash-fill" style="color: red;"></i>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+            <main class="content px-3 py-2">
+            <div class="container-fluid">
+                <div class="mb-3">
+                    <h4 style="color: black; font-weight: bold;">Dashboard</h4>
+                </div>
+                
+                <!-- Table Element -->
+                <div class="card border-0" style="margin-top: 48px; background-color: white;">
+                    <div class="card-header" style=>
+                        <h5 class="card-title" style="color: black; margin-top: 12px;">
+                            User List
+                        </h5>
                     </div>
+                    <div class="card-body" style="max-height: 400px; overflow-y: auto;">
+                        <table class="table">
+                            <thead>
+                                <tr style="color: black;">
+                                    <th scope="col">Full Name</th>
+                                    <th scope="col">Username</th>
+                                    <th scope="col">Email ID</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php while($row = $userDetailsResult->fetch_assoc()): ?>
+                                    <tr style="color: black;">
+                                        <td><?php echo htmlspecialchars($row['full_name']); ?></td>
+                                        <td><?php echo htmlspecialchars($row['username']); ?></td>
+                                        <td><?php echo htmlspecialchars($row['email_id']); ?></td>
+                                    </tr>
+                                <?php endwhile; ?>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-            </main>
+            </div>
+        </main>
         </div>
     </div>
 

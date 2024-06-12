@@ -7,6 +7,14 @@
     // Check if the user is an admin
     $isAdmin = $fn->Auth()['role'] === 'admin';
     
+    $user = $fn->Auth();
+
+    if ($user['role'] !== 'admin') {
+        // If not an admin, redirect to the homepage or show an error message
+        header("Location: login.php"); // Replace with your homepage URL
+        exit();
+    }
+    
     if ($isAdmin) {
         // Fetch all resumes for admin
         $resumes = $db->query("SELECT * FROM resumes ORDER BY id DESC");
