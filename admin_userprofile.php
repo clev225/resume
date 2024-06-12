@@ -93,7 +93,7 @@
                                                 <a href="admin_viewresume.php?resume=<?php echo htmlspecialchars($resume['slug']); ?>" class="text-decoration-none small">
                                                     <i class="bi bi-file-text"></i> View
                                                 </a>
-                                                <a href="actions/deleteresume.action.php" onclick="confirmDelete(<?php echo htmlspecialchars($resume['id']); ?>)" class="text-decoration-none small">
+                                                <a href="actions/admin_deleteresume.action.php?id=<?php echo $resume_id; ?>" onclick="return confirm('Are you sure you want to delete this resume?');" class="text-decoration-none small">
                                                     <i class="bi bi-trash2"></i> Delete
                                                 </a>
                                             </div>
